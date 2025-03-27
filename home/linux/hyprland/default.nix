@@ -4,7 +4,7 @@
   lib,
   ...
 } @ args:
-let
+with lib; let
   cfg = config.modules.desktop.hyprland;
 in {
   options.modules.desktop.hyprland = {
@@ -30,5 +30,5 @@ in {
     };
   };
 
-  config =[{ wayland.windowManager.hyprland.settings = cfg.settings; }] ++ (import ./settings args)
+  config =[{ wayland.windowManager.hyprland.settings = cfg.settings; }] ++ (import ./settings args);
 }

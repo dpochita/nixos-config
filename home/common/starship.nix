@@ -24,6 +24,6 @@
           format = "on [$symbol$active(\($region\))]($style) ";
           symbol = "🅶 ️";
         };
-      }
+      };
   };
 }
