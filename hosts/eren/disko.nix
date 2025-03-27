@@ -17,6 +17,14 @@
                 mountOptions = [ "umask=0077" ];
               };
             };
+            swap = {
+              size = "32GiB";
+              content = {
+                type = "swap";
+                randomEncryption = true;
+                priority = 100; # prefer to encrypt as long as we have space for it
+              };
+            };
             zfs = {
               size = "100%";
               content = {
@@ -58,10 +66,12 @@
             type = "zfs_fs";
             options.mountpoint = "none";
           };
+          # ZFS's performance will deteriorate significantly when more than 80% of the available space is used
+          # - to avoid this, reserve disk space beforehand.
           "local/reserved" = {
             type = "zfs_fs";
             options = {
-              reservation = "5GiB";
+              reservation = "10GiB";
             };
           };
           "local/root" = {
@@ -93,22 +103,6 @@
             options = {
               mountpoint = "legacy";
               "com.sun:auto-snapshot" = "true";
-            };
-          };
-          "local/swap" = {
-            type = "zfs_volume";
-            size = "32G";
-            content = {
-              type = "swap";
-            };
-            options = {
-              volblocksize = "4096";
-              compression = "zle";
-              logbias = "throughput";
-              sync = "always";
-              primarycache = "metadata";
-              secondarycache = "none";
-              "com.sun:auto-snapshot" = "false";
             };
           };
         };

@@ -43,5 +43,39 @@
       "/etc/machine-id"
       "/etc/zfs/zpool.cache"
     ];
+
+    # the following directories will be passed to /persistent/home/$USER
+    users.songlin = {
+      directories = [
+        "dev"
+        "nix-config"
+        "tmp"
+
+        "Downloads"
+        "Music"
+        "Pictures"
+        "Documents"
+        "Videos"
+
+        {
+          directory = ".gnupg";
+          mode = "0700";
+        }
+        {
+          directory = ".ssh";
+          mode = "0700";
+        }
+
+        # neovim / remmina / flatpak / ...
+        ".local/share"
+        ".local/state"
+
+        # language package managers
+        "go"
+        ".cargo" # rust
+        ".m2" # maven
+        ".gradle" # gradle
+      ];
+    };
   };
 }

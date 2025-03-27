@@ -62,7 +62,9 @@
   };
   services = {
     zfs = {
+      # run `zpool trim` automatically
       trim.enable = true;
+      # cannot fix error, only report
       autoScrub = {
         enable = true;
         pools = [ "zroot" ];
