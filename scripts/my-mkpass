@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+# Store plain-text or hashed & salted password in a file that is root-readable
+# only. For non-plain-text storage, `mkpasswd` is used on the plain-text input.
+#
+# A plain-text password can be supplied via the `-p` option (e.g. for testing
+# purposes), otherwise the password is read twice from stdin.
+
+set -euo pipefail
+
+script_name=$(basename "$0")
+
+_usage="
+Usage: $script_name [-hk] [-p <password>] <output-file>
+
+Options:
+  -h               Display a help screen and quit.
+  -k               Keep password as plain text and store it that way. Otherwise,
+                   only the hash of the password is stored.
+  -p <password>    Do not ask for password on stdin twice but use the given
+                   plain-text <password>.
+"
+
+usage() { echo "$_usage" >&2; exit "${1:?}"; }
+
+plain=''
+password=''
+
+while getopts ':hkp:' opt; do
+  case $opt in
+    k) plain=y;;
+    p) password="$OPTARG";;
+    h) usage 0;;
+    *) usage 1;;
+  esac
+done
+shift $((OPTIND-1))
+
+output="${1:-}"
+if [[ -z $output ]]; then
+  echo -e "$script_name: missing output file\n"
+  usage 1
+fi
+
+message="password ($output)"
+verification="${password:-different}"
+
+while [[ $password != "$verification" ]]; do
+  echo >&2
+  IFS= read -rsp "Enter $message: " password
+  echo >&2
+  IFS= read -rsp "Repeat $message: " verification
+  echo >&2
+done
+
+if [[ -n $plain ]]; then
+  # Do not change the input
+  encoder='cat'
+else
+  # Hash and salt the input
+  encoder="mkpasswd -s"
+fi
+
+printf %s "$password" | $encoder | sudo bash -c "umask 0377; cat > $output"
