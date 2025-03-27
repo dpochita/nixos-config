@@ -20,6 +20,13 @@ in {
   };
   networking.networkmanager.enable = false;
 
+  networking = {
+    inherit hostName;
+    hostId = builtins.substring 0 8 (
+      builtins.hashString "sha256" hostName
+    );
+  };
+
  #  networking = {
  #    inherit hostName;
  #    inherit (myvars.networking) defaultGateway nameservers;
