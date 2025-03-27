@@ -15,14 +15,9 @@
   ####################################################################
   #  NixOS's Configuration for Wayland based Window Manager
   ####################################################################
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    extraPortals = with pkgs; [
-        xdg-desktop-portal-wlr
-    ];
-  };
-  
+ 
+  xdg.portal.config.common.default = "*"; 
+
   services = {
     xserver.enable = false; # disable xorg server
     # https://wiki.archlinux.org/title/Greetd
