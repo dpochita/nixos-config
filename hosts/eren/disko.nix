@@ -89,9 +89,9 @@
               encryption = "off";
             };
           };
-          "local/persist" = {
+          "local/persistent" = {
             type = "zfs_fs";
-            mountpoint = "/persist";
+            mountpoint = "/persistent";
             options = {
               mountpoint = "legacy";
               "com.sun:auto-snapshot" = "true";

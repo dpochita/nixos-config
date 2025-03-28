@@ -19,10 +19,8 @@
   boot.loader.systemd-boot.enable = true;
 
   # for impermanence
-  boot.initrd.postDeviceCommands = lib.mkAfter ''
-    zpool import -N zroot
-    zfs rollback -r zroot/local/root@blank
-  '';
+  # https://discourse.nixos.org/t/zfs-rollbacks-suddenly-stopped-working/55333/5
+  boot.initrd.postResumeCommands = lib.mkAfter "zfs rollback -r zroot/local/root@blank";
 
   boot.kernelParams = [
     # https://github.com/NixOS/nixpkgs/issues/35681
@@ -56,11 +54,11 @@
     "exfat"
   ];
 
-
   fileSystems = {
     "/var/log".neededForBoot = true;
-    "/persist".neededForBoot = true;
+    "/persistent".neededForBoot = true;
   };
+
   services = {
     zfs = {
       # run `zpool trim` automatically
