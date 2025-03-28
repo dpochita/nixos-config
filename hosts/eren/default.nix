@@ -25,13 +25,13 @@ in {
     hostId = builtins.substring 0 8 (
       builtins.hashString "sha256" hostName
     );
-    inherit (myvars.networking) gateway nameservers;
+    inherit (myvars.networking) defaultGateway nameservers;
     inherit (myvars.networking.hostsInterface.${hostName}) interfaces;
   };
 
  #  networking = {
  #    inherit hostName;
- #    inherit (myvars.networking) gateway nameservers;
+ #    inherit (myvars.networking) defaultGateway nameservers;
  #    inherit (myvars.networking.hostsInterface.${hostName}) interfaces;
 
  #    # desktop need its cli for status bar

@@ -30,5 +30,5 @@ in {
     };
   };
 
-  config =[{ wayland.windowManager.hyprland.settings = cfg.settings; }] ++ (import ./settings args);
+  config =mkMerge([{ wayland.windowManager.hyprland.settings = cfg.settings; }] ++ (import ./settings args));
 }

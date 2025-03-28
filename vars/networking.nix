@@ -1,5 +1,5 @@
 {lib}: rec {
-  gateway = "192.168.31.1"; # main router
+  defaultGateway = "192.168.31.1"; # main router
   nameservers = [
     "192.168.31.253"
 #     "119.29.29.29" # DNSPod
