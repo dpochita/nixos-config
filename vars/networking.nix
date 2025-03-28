@@ -12,7 +12,8 @@
     # Physical Mechaine
     # ============================================
     eren = {
-      iface = "eno1";
+      # wifi interface
+      iface = "wlp4s0";
       ipv4 = "192.168.31.102";
     };
   };
@@ -74,7 +75,7 @@
         publicKey = value.publicKey;
       })
       {
-        # aquamarine.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEOXFhFu9Duzp6ZBE288gDZ6VLrNaeWL4kDrFUh9Neic root@aquamarine";
+        mbp.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIECHbH9e7atn30ZeCfGqyocWrd2lN5JjDm2MpY0yglVU songlin@mbp";
         # ruby.publicKey = "";
         # kana.publicKey = "";
       };

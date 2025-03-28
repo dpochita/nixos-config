@@ -25,6 +25,8 @@ in {
     hostId = builtins.substring 0 8 (
       builtins.hashString "sha256" hostName
     );
+    inherit (myvars.networking) defaultGateway nameservers;
+    inherit (myvars.networking.hostsInterface.${hostName}) interfaces;
   };
 
  #  networking = {

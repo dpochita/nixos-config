@@ -20,6 +20,7 @@
 
   # for impermanence
   boot.initrd.postDeviceCommands = lib.mkAfter ''
+    zpool import -N zroot
     zfs rollback -r zroot/local/root@blank
   '';
 
@@ -34,7 +35,7 @@
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
   boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod"];
-  boot.initrd.kernelModules = ["amdgpu"];
+  # boot.initrd.kernelModules = ["amdgpu"];
   boot.kernelModules = ["kvm-intel"]; # kvm virtualization support
   boot.extraModprobeConfig = "options kvm_intel nested=1"; # for intel cpu
   boot.extraModulePackages = [];
